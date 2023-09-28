@@ -4,13 +4,13 @@ public class Empleado {
     private String nombre;
     private String apellido;
     private String cedula;
-    private String edad;
+    private int edad;
     PrestamoUq ownedByPrestamoUq;
 
     public Empleado() {
     }
 
-    public Empleado(String nombre, String apellido, String cedula, String edad) {
+    public Empleado(String nombre, String apellido, String cedula, int edad) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.cedula = cedula;
@@ -41,11 +41,11 @@ public class Empleado {
         this.cedula = cedula;
     }
 
-    public String getEdad() {
+    public int getEdad() {
         return edad;
     }
 
-    public void setEdad(String edad) {
+    public void setEdad(int edad) {
         this.edad = edad;
     }
 

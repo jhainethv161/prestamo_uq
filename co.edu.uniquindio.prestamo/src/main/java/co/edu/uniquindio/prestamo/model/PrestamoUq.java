@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PrestamoUq {
-    public List<Cliente> obtenerClientes;
     private String nombre;
     List<Cliente> listaClientes = new ArrayList<Cliente>();
     List<Empleado> listaEmpleados = new ArrayList<Empleado>();
@@ -48,6 +47,13 @@ public class PrestamoUq {
         this.listaObjetos = listaObjetos;
     }
 
+    @Override
+    public String toString() {
+        return "PrestamoUq{" +
+                "nombre='" + nombre + '\'' +
+                '}';
+    }
+
     /**
      * Metodo para crear un cliente
      * @param nombre
@@ -66,13 +72,6 @@ public class PrestamoUq {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "PrestamoUq{" +
-                "nombre='" + nombre + '\'' +
-                '}';
-    }
-
     /**
      * Metodo para obtener la lista de todos los clientes
      * @return List<Cliente>
@@ -83,9 +82,10 @@ public class PrestamoUq {
     }
 
     /**
-     * metodo para eliminar un cliiente
+     * metodo para eliminar un cliente
      * @param cedula
      */
+
     public void eliminarCliente(String cedula) {
         int tamanioLista =getListaClientes().size();
         for (int i =0; i < tamanioLista;i++){
@@ -97,6 +97,13 @@ public class PrestamoUq {
         }
     }
 
+    /**
+     * Metodo que permite actualizar la informacion de un cliente
+     * @param nombre
+     * @param apellido
+     * @param cedula
+     * @param edad
+     */
     public void actualizarCliente(String nombre, String apellido, String cedula, int edad) {
         int tamanioLista =getListaClientes().size();
         for (int i =0; i < tamanioLista;i++){
@@ -106,6 +113,69 @@ public class PrestamoUq {
                 cliente.setApellido(apellido);
                 cliente.setCedula(cedula);
                 cliente.setEdad(edad);
+                getListaClientes().set(i, cliente);
+                break;
+            }
+        }
+    }
+
+    /**
+     * metodo que permite crear un nuevo empleado
+     * @param nombre
+     * @param apellido
+     * @param cedula
+     * @param edad
+     * @return boolean
+     */
+    public boolean crearEmpleado(String nombre, String apellido, String cedula, int edad) {
+        Empleado empleado = new Empleado();
+        empleado.setNombre(nombre);
+        empleado.setApellido(apellido);
+        empleado.setCedula(cedula);
+        empleado.setEdad(edad);
+        getListaEmpleados().add(empleado);
+        return true;
+    }
+
+    /**
+     * Metodo para obtener la lista de todos los empleados
+     * @return List<Empleado>
+     */
+    public List<Empleado> obtenerEmpleados(){
+        return getListaEmpleados();
+    }
+
+    /**
+     * Metodo que permite actualizar la informacionde un empleado
+     * @param nombre
+     * @param apellido
+     * @param cedula
+     * @param edad
+     */
+    public void actualizarEmpleado(String nombre, String apellido, String cedula, int edad) {
+        int tamanioLista = getListaEmpleados().size();
+        for(int i = 0; i<tamanioLista;i++){
+            Empleado empleado = getListaEmpleados().get(i);
+            if (empleado.getCedula().equalsIgnoreCase(cedula)){
+                empleado.setNombre(nombre);
+                empleado.setApellido(apellido);
+                empleado.setCedula(cedula);
+                empleado.setEdad(edad);
+                getListaEmpleados().set(i, empleado);
+            }
+        }
+    }
+
+    /**
+     * Metodo que permite eliminar a un empleado de la lista
+     * @param cedula
+     */
+    public void eliminarEmpleado(String cedula) {
+        int tamanioLista = getListaEmpleados().size();
+        for (int i=0;i<tamanioLista;i++){
+            Empleado empleado = getListaEmpleados().get(i);
+            if (empleado.getCedula().equalsIgnoreCase(cedula)){
+                getListaEmpleados().remove(i);
                 break;
             }
         }

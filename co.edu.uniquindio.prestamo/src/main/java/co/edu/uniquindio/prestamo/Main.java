@@ -2,6 +2,7 @@ package co.edu.uniquindio.prestamo;
 
 import co.edu.uniquindio.prestamo.model.Cliente;
 import co.edu.uniquindio.prestamo.model.Empleado;
+import co.edu.uniquindio.prestamo.model.Objeto;
 import co.edu.uniquindio.prestamo.model.PrestamoUq;
 
 import java.util.List;
@@ -30,13 +31,19 @@ public class Main {
         //delete empleado
         eliminarEmpleado(prestamoUq, "4567");
 
-
-
+        //OBJETO
+        //create objeto
+        crearObjeto("Control","01", prestamoUq);
+        crearObjeto("Computdor","02", prestamoUq);
+        //read objeto
+        mostrarInformacionObjetos(prestamoUq);
+        //update objeto
+        actualizarObjeto("Control videoBeam", "01", prestamoUq);
+        //delete objeto
+        eliminarObjeto(prestamoUq, "02");
     }
 
-    private static void eliminarEmpleado(PrestamoUq prestamoUq, String cedula) {
-        prestamoUq.eliminarEmpleado(cedula);
-    }
+    //CLIENTE-----------------------------------------------------------------------------------
 
     private static PrestamoUq inicializarDatosPrueba() {
         PrestamoUq prestamoUq = new PrestamoUq();
@@ -67,6 +74,7 @@ public class Main {
 
     }
 
+    //EMPLEADO----------------------------------------------------------------------------------
     public static void crearEmpleado(String nombre,
                                     String apellido,
                                     String cedula,
@@ -87,4 +95,32 @@ public class Main {
     private static void actualizarEmpleado(PrestamoUq prestamoUq, String nombre, String apellido, String cedula, int edad) {
         prestamoUq.actualizarEmpleado(nombre, apellido, cedula, edad);
     }
+
+    private static void eliminarEmpleado(PrestamoUq prestamoUq, String cedula) {
+        prestamoUq.eliminarEmpleado(cedula);
+    }
+
+    //OBJETO----------------------------------------------------------------------------------------
+
+    private static void crearObjeto(String nombre, String idObjeto, PrestamoUq prestamoUq) {
+        prestamoUq.crearObjeto(nombre, idObjeto);
+    }
+
+    private static void mostrarInformacionObjetos(PrestamoUq prestamoUq) {
+        List<Objeto> listaObjetos = prestamoUq.getListaObjetos();
+        int tamanioLista = listaObjetos.size();
+        for (int i = 0; i<tamanioLista;i++){
+            Objeto objeto = listaObjetos.get(i);
+            System.out.println(objeto.toString());
+        }
+    }
+
+    private static void actualizarObjeto(String nombre, String idObjeto, PrestamoUq prestamoUq) {
+        prestamoUq.actualizarObjeto(nombre, idObjeto);
+    }
+
+    private static void eliminarObjeto(PrestamoUq prestamoUq, String idObjeto) {
+        prestamoUq.eliminarObjeto(idObjeto);
+    }
+
 }

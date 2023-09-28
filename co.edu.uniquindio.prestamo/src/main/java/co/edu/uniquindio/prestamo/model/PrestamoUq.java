@@ -54,6 +54,17 @@ public class PrestamoUq {
                 '}';
     }
 
+
+    //CLIENTE ---------------------------
+    /**
+     * Metodo para obtener la lista de todos los clientes
+     * @return List<Cliente>
+     */
+
+    public List<Cliente> obtenerClientes(){
+        return getListaClientes();
+    }
+
     /**
      * Metodo para crear un cliente
      * @param nombre
@@ -70,15 +81,6 @@ public class PrestamoUq {
         cliente.setEdad(edad);
         getListaClientes().add(cliente);
         return true;
-    }
-
-    /**
-     * Metodo para obtener la lista de todos los clientes
-     * @return List<Cliente>
-     */
-
-    public List<Cliente> obtenerClientes(){
-        return getListaClientes();
     }
 
     /**
@@ -119,6 +121,16 @@ public class PrestamoUq {
         }
     }
 
+    //EMPLEADO-------------------------------------
+
+    /**
+     * Metodo para obtener la lista de todos los empleados
+     * @return List<Empleado>
+     */
+    public List<Empleado> obtenerEmpleados(){
+        return getListaEmpleados();
+    }
+
     /**
      * metodo que permite crear un nuevo empleado
      * @param nombre
@@ -137,13 +149,6 @@ public class PrestamoUq {
         return true;
     }
 
-    /**
-     * Metodo para obtener la lista de todos los empleados
-     * @return List<Empleado>
-     */
-    public List<Empleado> obtenerEmpleados(){
-        return getListaEmpleados();
-    }
 
     /**
      * Metodo que permite actualizar la informacionde un empleado
@@ -176,6 +181,56 @@ public class PrestamoUq {
             Empleado empleado = getListaEmpleados().get(i);
             if (empleado.getCedula().equalsIgnoreCase(cedula)){
                 getListaEmpleados().remove(i);
+                break;
+            }
+        }
+    }
+
+    //OBJETO----------------------------
+
+    public List<Objeto> obtenerObjetos(){return getListaObjetos();}
+
+    /**
+     * Metodo que permite crear un nuevo objeto (producto)
+     * @param nombre
+     * @return boolean
+     */
+    public boolean crearObjeto(String nombre, String idObjeto) {
+        Objeto objeto = new Objeto();
+        objeto.setNombre(nombre);
+        objeto.setIdObjeto(idObjeto);
+        getListaObjetos().add(objeto);
+        return true;
+    }
+
+    /**
+     * Metodo que permie actualizar la informacion asociada a un objeto
+     * @param nombre
+     * @param idObjeto
+     */
+    public void actualizarObjeto(String nombre, String idObjeto) {
+        int tamanioLista = getListaObjetos().size();
+        for (int i =0; i<tamanioLista;i++){
+            Objeto objeto = getListaObjetos().get(i);
+            if (objeto.getIdObjeto().equalsIgnoreCase(idObjeto)){
+                objeto.setNombre(nombre);
+                objeto.setIdObjeto(idObjeto);
+                getListaObjetos().set(i,objeto);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Metodo p[ara eliminar un objeto de la lista
+     * @param idObjeto
+     */
+    public void eliminarObjeto(String idObjeto) {
+        int tamanioLista = getListaObjetos().size();
+        for (int i = 0; i<tamanioLista; i++){
+            Objeto objeto = getListaObjetos().get(i);
+            if (objeto.getIdObjeto().equalsIgnoreCase(idObjeto)){
+                getListaObjetos().remove(i);
                 break;
             }
         }

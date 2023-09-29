@@ -11,4 +11,6 @@ public class Procesos {
         int num = Integer.parseInt(JOptionPane.showInputDialog(mensaje));
         return num;
     }
+
+
 }

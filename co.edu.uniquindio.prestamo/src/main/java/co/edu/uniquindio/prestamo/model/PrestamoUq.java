@@ -148,24 +148,16 @@ public class PrestamoUq {
         int tamanioLista = getListaEmpleados().size();
         do {
             cedula = procesos.pedirCadena("Ingrese la cedula del empleado");
-            for (int i = 0; i < tamanioLista; i++) {
-                Empleado empleado = getListaEmpleados().get(i);
-                if (empleado.getCedula().equalsIgnoreCase(cedula)) {
-                    existe = true;
-                    break;
-                }
+            Empleado empleado = buscarEmpleado(cedula);
+            if (empleado != null){
+                existe = true;
+                JOptionPane.showMessageDialog(null, "La cedula ya se encuentra asociada a otro empleado");
+            }else{
+                existe = false;
             }
-            if (existe) {
-                JOptionPane.showMessageDialog(null, "La cédula ya está asociada a otro empleado. Intente nuevamente.");
-            }
+
         } while (existe);
-
-
-        Empleado empleado = new Empleado();
-        empleado.setNombre(nombre);
-        empleado.setApellido(apellido);
-        empleado.setCedula(cedula);
-        empleado.setEdad(edad);
+        Empleado empleado = new Empleado(nombre, apellido, cedula, edad);
         getListaEmpleados().add(empleado);
         return true;
     }
@@ -174,34 +166,32 @@ public class PrestamoUq {
      */
     public void actualizarEmpleado() {
         String cedula = procesos.pedirCadena("Ingrese la cedula del cliente que desea actualizar");
-        int tamanioLista = getListaEmpleados().size();
-        boolean existe = false;
+        Empleado empleado = buscarEmpleado(cedula);
+        if (empleado == null){
+            JOptionPane.showMessageDialog(null, "No se encontro ningun empleado asociado a esta cedula");
+        } else if (empleado != null) {
+            String nombre = procesos.pedirCadena("Ingrese el nombre del empleado");
+            String apellido = procesos.pedirCadena("Ingrese el apellido del empleado");
+            int edad = procesos.pedirEntero("Ingrese la edad del empleado");
+            String cedulaActualizada = "";
+            boolean seguir = true;
+            do {
+                cedulaActualizada = procesos.pedirCadena("Ingrese la cedula del empleado");
+                if (buscarEmpleado(cedulaActualizada)==null || cedulaActualizada.equalsIgnoreCase(cedula)){
+                    seguir = false;
+                }
+            }while (seguir);
 
-        for(int i = 0; i<tamanioLista;i++){
-            Empleado empleado = getListaEmpleados().get(i);
-            if (empleado.getCedula().equalsIgnoreCase(cedula)){
-                String nombre = procesos.pedirCadena("Ingrese el nombre del empleado");
-                String apellido = procesos.pedirCadena("Ingrese el apellido del empleado");
-                int edad = procesos.pedirEntero("Ingrese la edad del empleado");
-                do {
-                    cedula = procesos.pedirCadena("Ingrese la cedula del empleado");
-                    existe = false;
-                    for (int j = 0; j < tamanioLista; j++) {
-                        if (empleado.getCedula().equalsIgnoreCase(cedula)) {
-                            existe = true;
-                            break;
-                        }
-                    }
+            empleado.setNombre(nombre);
+            empleado.setApellido(apellido);
+            empleado.setCedula(cedulaActualizada);
+            empleado.setEdad(edad);
 
-                } while (existe);
-
-                empleado.setNombre(nombre);
-                empleado.setApellido(apellido);
-                empleado.setCedula(cedula);
-                empleado.setEdad(edad);
-                getListaEmpleados().set(i, empleado);
-            }else{
-                JOptionPane.showMessageDialog(null, "La cedula ingresada no se encuentra asociiada a nuingun empleado");
+            for(int i =0; i <getListaEmpleados().size();i++){
+                Empleado empleadoBuscar = getListaEmpleados().get(i);
+                if (empleadoBuscar.getCedula().equalsIgnoreCase(cedula)){
+                    getListaEmpleados().set(i, empleado);
+                }
             }
         }
     }
@@ -211,19 +201,29 @@ public class PrestamoUq {
      */
     public void eliminarEmpleado() {
         String cedula = procesos.pedirCadena("Ingrese la cedula del cliente que desea eliminar: ");
-        boolean existe = false;
-        int tamanioLista = getListaEmpleados().size();
-        for (int i=0;i<tamanioLista;i++){
-            Empleado empleado = getListaEmpleados().get(i);
-            if (empleado.getCedula().equalsIgnoreCase(cedula)){
-                getListaEmpleados().remove(i);
-                existe = true;
-                break;
+        if (buscarEmpleado(cedula)==null){
+            JOptionPane.showMessageDialog(null, "No se encontro ningun empleado asociado a esta cedula");
+        }else{
+            for (int i=0;i<getListaEmpleados().size();i++){
+                Empleado empleado = getListaEmpleados().get(i);
+                if (empleado.getCedula().equalsIgnoreCase(cedula)){
+                    getListaEmpleados().remove(i);
+                    break;
+                }
             }
         }
-
     }
 
+    public Empleado buscarEmpleado(String cedula){
+        int tamanioListaEmpleados = getListaEmpleados().size();
+        for(int i =0; i <tamanioListaEmpleados;i++){
+            Empleado empleado = getListaEmpleados().get(i);
+            if (empleado.getCedula().equalsIgnoreCase(cedula)){
+                return empleado;
+            }
+        }
+        return null;
+    }
 
     public  String menuEmpleado(){
         String mensaje = "Usted desea: \n"+

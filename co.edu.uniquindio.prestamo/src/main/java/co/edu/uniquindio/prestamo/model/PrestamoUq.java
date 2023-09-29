@@ -1,5 +1,6 @@
 package co.edu.uniquindio.prestamo.model;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +47,8 @@ public class PrestamoUq {
     public void setListaObjetos(List<Objeto> listaObjetos) {
         this.listaObjetos = listaObjetos;
     }
+
+    Procesos procesos = new Procesos();
 
     @Override
     public String toString() {
@@ -131,15 +134,35 @@ public class PrestamoUq {
         return getListaEmpleados();
     }
 
+
     /**
-     * metodo que permite crear un nuevo empleado
-     * @param nombre
-     * @param apellido
-     * @param cedula
-     * @param edad
+     * Metodo que permite registrar un nuevo empleado
      * @return boolean
      */
-    public boolean crearEmpleado(String nombre, String apellido, String cedula, int edad) {
+    public boolean crearEmpleado() {
+        String nombre = procesos.pedirCadena("Ingrese el nombre del empleado");
+        String apellido = procesos.pedirCadena("Ingrese el apellido del empleado");
+        int edad = procesos.pedirEntero("Ingrese la edad del empleado");
+        String cedula = "";
+        boolean existe = false;
+        int tamanioLista = getListaEmpleados().size();
+        do {
+            cedula = procesos.pedirCadena("Ingrese la cedula del empleado");
+            existe = false;
+            for (int i = 0; i < tamanioLista; i++) {
+                Empleado empleado = getListaEmpleados().get(i);
+                if (empleado.getCedula().equalsIgnoreCase(cedula)) {
+                    existe = true;
+                    break;
+                }
+            }
+            if (existe) {
+                System.out.println("La cedula ya está asociada a otro empleado. Intente nuevamente.");
+            }
+
+        } while (existe);
+
+
         Empleado empleado = new Empleado();
         empleado.setNombre(nombre);
         empleado.setApellido(apellido);
@@ -151,39 +174,70 @@ public class PrestamoUq {
 
 
     /**
-     * Metodo que permite actualizar la informacionde un empleado
-     * @param nombre
-     * @param apellido
-     * @param cedula
-     * @param edad
+      * Metodo que permite actualizar la informacionde un empleado
      */
-    public void actualizarEmpleado(String nombre, String apellido, String cedula, int edad) {
+    public void actualizarEmpleado() {
+        String cedula = procesos.pedirCadena("Ingrese la cedula del cliente que desea actualizar");
         int tamanioLista = getListaEmpleados().size();
+        boolean existe = false;
+
         for(int i = 0; i<tamanioLista;i++){
             Empleado empleado = getListaEmpleados().get(i);
             if (empleado.getCedula().equalsIgnoreCase(cedula)){
+                String nombre = procesos.pedirCadena("Ingrese el nombre del empleado");
+                String apellido = procesos.pedirCadena("Ingrese el apellido del empleado");
+                int edad = procesos.pedirEntero("Ingrese la edad del empleado");
+                do {
+                    cedula = procesos.pedirCadena("Ingrese la cedula del empleado");
+                    existe = false;
+                    for (int j = 0; j < tamanioLista; j++) {
+                        if (empleado.getCedula().equalsIgnoreCase(cedula)) {
+                            existe = true;
+                            break;
+                        }
+                    }
+
+
+                } while (existe);
+
                 empleado.setNombre(nombre);
                 empleado.setApellido(apellido);
                 empleado.setCedula(cedula);
                 empleado.setEdad(edad);
                 getListaEmpleados().set(i, empleado);
+            }else{
+                JOptionPane.showMessageDialog(null, "La cedula ingresada no se encuentra asociiada a nuingun empleado");
             }
         }
     }
 
     /**
      * Metodo que permite eliminar a un empleado de la lista
-     * @param cedula
      */
-    public void eliminarEmpleado(String cedula) {
+    public void eliminarEmpleado() {
+        String cedula = procesos.pedirCadena("Ingrese la cedula del cliente que desea eliminar: ");
+        boolean existe = false;
         int tamanioLista = getListaEmpleados().size();
         for (int i=0;i<tamanioLista;i++){
             Empleado empleado = getListaEmpleados().get(i);
             if (empleado.getCedula().equalsIgnoreCase(cedula)){
                 getListaEmpleados().remove(i);
+                existe = true;
                 break;
             }
         }
+
+    }
+
+
+    public  String menuEmpleado(){
+        String mensaje = "Usted desea: \n"+
+                "1. Crear empleado \n"+
+                "2. Actualizar empleado \n"+
+                "3. Eliminar empleado \n"+
+                "4. Mostrar informacion empleados \n"+
+                "5.salir \n";
+        return mensaje;
     }
 
     //OBJETO----------------------------

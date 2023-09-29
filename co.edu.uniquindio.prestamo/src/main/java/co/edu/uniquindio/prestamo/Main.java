@@ -5,6 +5,7 @@ import co.edu.uniquindio.prestamo.model.Empleado;
 import co.edu.uniquindio.prestamo.model.Objeto;
 import co.edu.uniquindio.prestamo.model.PrestamoUq;
 
+import javax.swing.*;
 import java.util.List;
 
 public class Main {
@@ -20,16 +21,37 @@ public class Main {
         //delete cliente
         eliminarCliente(prestamoUq, "1094");
 
-        //EMPLEADO
-        //create empleado
-        crearEmpleado("Juan", "Aras", "4567", 50, prestamoUq);
-        crearEmpleado("Valen", "Naranjo", "3674", 17, prestamoUq);
-        //read empleado
-        mostarInformacionEmpleados(prestamoUq);
-        //update empleado
-        actualizarEmpleado(prestamoUq, "Juan", "arias", "4567", 51);
-        //delete empleado
-        eliminarEmpleado(prestamoUq, "4567");
+       //EMPLEADO
+        int opcion = 0;
+
+        do {
+            opcion = Integer.parseInt(JOptionPane.showInputDialog(prestamoUq.menuEmpleado()));
+            switch (opcion){
+                case 1:
+                    prestamoUq.crearEmpleado();
+                    mostarInformacionEmpleados(prestamoUq);
+                    System.out.println("-----------------------------");
+                    break;
+                case 2:
+                    prestamoUq.actualizarEmpleado();
+                    mostarInformacionEmpleados(prestamoUq);
+                    System.out.println("-----------------------------");
+                    break;
+                case 3:
+                    prestamoUq.eliminarEmpleado();
+                    mostarInformacionEmpleados(prestamoUq);
+                    System.out.println("-----------------------------");
+                    break;
+                case 4:
+                    mostarInformacionEmpleados(prestamoUq);
+                    System.out.println("-----------------------------");
+                    break;
+                case 5:
+                    JOptionPane.showMessageDialog(null,"Gracias por utilizar el programa");
+                    break;
+            }
+
+        }while (opcion!=5);
 
         //OBJETO
         //create objeto
@@ -75,12 +97,8 @@ public class Main {
     }
 
     //EMPLEADO----------------------------------------------------------------------------------
-    public static void crearEmpleado(String nombre,
-                                    String apellido,
-                                    String cedula,
-                                    int edad,
-                                    PrestamoUq prestamoUq) {
-        prestamoUq.crearEmpleado(nombre, apellido, cedula, edad);
+    public static void crearEmpleado(PrestamoUq prestamoUq) {
+        prestamoUq.crearEmpleado();
     }
 
     private static void mostarInformacionEmpleados(PrestamoUq prestamoUq) {
@@ -92,12 +110,12 @@ public class Main {
         }
     }
 
-    private static void actualizarEmpleado(PrestamoUq prestamoUq, String nombre, String apellido, String cedula, int edad) {
-        prestamoUq.actualizarEmpleado(nombre, apellido, cedula, edad);
+    private static void actualizarEmpleado(PrestamoUq prestamoUq){
+        prestamoUq.actualizarEmpleado();
     }
 
-    private static void eliminarEmpleado(PrestamoUq prestamoUq, String cedula) {
-        prestamoUq.eliminarEmpleado(cedula);
+    private static void eliminarEmpleado(PrestamoUq prestamoUq) {
+        prestamoUq.eliminarEmpleado();
     }
 
     //OBJETO----------------------------------------------------------------------------------------

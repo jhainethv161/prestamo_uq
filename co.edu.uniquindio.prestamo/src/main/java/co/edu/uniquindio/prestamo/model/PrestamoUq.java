@@ -148,7 +148,6 @@ public class PrestamoUq {
         int tamanioLista = getListaEmpleados().size();
         do {
             cedula = procesos.pedirCadena("Ingrese la cedula del empleado");
-            existe = false;
             for (int i = 0; i < tamanioLista; i++) {
                 Empleado empleado = getListaEmpleados().get(i);
                 if (empleado.getCedula().equalsIgnoreCase(cedula)) {
@@ -157,9 +156,8 @@ public class PrestamoUq {
                 }
             }
             if (existe) {
-                System.out.println("La cedula ya está asociada a otro empleado. Intente nuevamente.");
+                JOptionPane.showMessageDialog(null, "La cédula ya está asociada a otro empleado. Intente nuevamente.");
             }
-
         } while (existe);
 
 
@@ -171,8 +169,6 @@ public class PrestamoUq {
         getListaEmpleados().add(empleado);
         return true;
     }
-
-
     /**
       * Metodo que permite actualizar la informacionde un empleado
      */
@@ -196,7 +192,6 @@ public class PrestamoUq {
                             break;
                         }
                     }
-
 
                 } while (existe);
 

@@ -28,17 +28,17 @@ public class Main {
             opcion = Integer.parseInt(JOptionPane.showInputDialog(prestamoUq.menuEmpleado()));
             switch (opcion){
                 case 1:
-                    prestamoUq.crearEmpleado();
+                    crearEmpleado(prestamoUq);
                     mostarInformacionEmpleados(prestamoUq);
                     System.out.println("-----------------------------");
                     break;
                 case 2:
-                    prestamoUq.actualizarEmpleado();
+                    actualizarEmpleado(prestamoUq);
                     mostarInformacionEmpleados(prestamoUq);
                     System.out.println("-----------------------------");
                     break;
                 case 3:
-                    prestamoUq.eliminarEmpleado();
+                    eliminarEmpleado(prestamoUq);
                     mostarInformacionEmpleados(prestamoUq);
                     System.out.println("-----------------------------");
                     break;
